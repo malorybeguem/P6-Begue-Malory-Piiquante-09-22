@@ -72,7 +72,7 @@ exports.modifySauce = (req, res, next) => {
       if (sauce.userId !== req.auth.userId) {
         res.status(401).json({
         error: new Error(
-            "Vous n'êtes pas le propriétaire de cette sauce."
+            "Vous n'êtes pas le propriétaire de cette sauce vous ne pouvez pas la supprimer."
         ),
         });
       }
@@ -85,3 +85,61 @@ exports.modifySauce = (req, res, next) => {
     });
   };
 
+  // LIKE A SAUCE //
+  exports.likeSauce = (req, res, next) => {
+    Sauce.findOne({ _id: req.params.id })
+    .then((sauce) => {
+        if (!sauce) {
+        return res.status(404).json({
+            error: new Error("Cette sauce n'existe pas"),
+        });
+        };
+
+// SAUCE LIKES //
+const userLikeIndex = sauce.usersLiked.findIndex(
+    (userId) => userId == req.body.userId
+    );
+    const userDislikeIndex = sauce.usersDisliked.findIndex(
+        (userId) => userId == req.body.userId
+        );
+ if (req.body.like === 1) {
+    if (userLikeIndex !== -1) {
+        return res.status(500).json({
+        error: new Error("L'utilisateur a déjà liké cette sauce"),
+        });
+            }
+              if (userDislikeIndex !== -1) {
+                  sauce.usersDisliked.splice(userDislikeIndex, 1);
+                  sauce.dislikes--;
+              }
+          sauce.usersLiked.push(req.body.userId);
+          sauce.likes++;
+        }
+if (req.body.like === -1) {
+    if (userDislikeIndex !== -1) {
+        return res.status(500).json({
+            error: new Error("L'utilisateur a déjà disliké cette sauce"),
+            });
+          }
+        if (userLikeIndex !== -1) {
+         sauce.usersLiked.splice(userLikeIndex, 1);
+         sauce.likes--;
+          }
+          sauce.usersDisliked.push(req.body.userId);
+          sauce.dislikes++;
+        }
+if (req.body.like === 0) {
+    if (userDislikeIndex !== -1) {
+        sauce.usersDisliked.splice(userDislikeIndex, 1);
+        sauce.dislikes--;
+    }
+    else if (userLikeIndex !== -1) {
+        sauce.usersLiked.splice(userLikeIndex, 1);
+        sauce.likes--;
+    }
+}
+        Sauce.updateOne({ _id: req.params.id }, sauce).then(() => {
+          res.status(200).json({ message: "Votre avis est enregistré !" });
+});
+});
+};
