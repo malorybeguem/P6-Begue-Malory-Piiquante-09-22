@@ -1,3 +1,4 @@
+//Tools initializations for the app//
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
