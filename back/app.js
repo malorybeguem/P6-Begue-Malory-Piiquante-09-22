@@ -10,4 +10,10 @@ require('dotenv').config({path: '.env'});
 
 const app = express();
 
+app.use(helmet({
+    crossOriginResourcePolicy: { policy: "same-site"}
+  }));
+  
+  app.use(express.json());
+
 module.exports = app;
