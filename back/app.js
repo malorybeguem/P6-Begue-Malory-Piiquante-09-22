@@ -19,7 +19,7 @@ app.use(helmet({
   app.use(express.json());
 
 // MongoDb Connect status //
-  mongoose.connect("mongodb+srv://euphoriiah:<ichigo123>@cluster0.vizbtkm.mongodb.net/test",
+  mongoose.connect("mongodb+srv://euphoriiah:ichigo123@cluster0.vizbtkm.mongodb.net/test",
 { useNewUrlParser: true, 
   useUnifiedTopology: true 
 })
