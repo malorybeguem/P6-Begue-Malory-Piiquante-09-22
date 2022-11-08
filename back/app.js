@@ -20,7 +20,6 @@ mongoose.connect('mongodb+srv://euphoriiah:ichigo123@euphombcluster1.5vhwq6d.mon
 
 app.use(express.json());
 
-
 //header - Global access to API //
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
