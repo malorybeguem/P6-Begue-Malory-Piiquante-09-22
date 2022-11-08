@@ -1,8 +1,9 @@
+//REQUIRES//
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
-
+// SIGNUP //
 exports.signup = (req, res, next) =>{
     bcrypt.hash(req.body.password, 10)
     .then(hash => {
@@ -17,11 +18,12 @@ exports.signup = (req, res, next) =>{
     .catch(error => res.status(500).json({ error }));
 };
 
+//LOGIN//
 exports.login = (req, res, next) => {
     User.findOne({ email: req.body.email })
       .then(user => {
         if (!user) {
-          return res.status(401).json({ error: 'Utilisateur non trouvé !' });
+          return res.status(401).json({ message: 'Utilisateur non trouvé !' });
         }
         bcrypt.compare(req.body.password, user.password)
           .then(valid => {
