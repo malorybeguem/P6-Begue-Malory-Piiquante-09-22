@@ -4,6 +4,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require("helmet")
 const dotenv = require("dotenv");
+const hpp = require("hpp");
+const cors = require('cors');
 const saucesRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
 const path = require('path');
@@ -31,6 +33,10 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // Helmet middlware for safe headers //
 app.use(helmet());
+
+// SECURITY adds //
+app.use(hpp()); // HPP middleware to protect against HTTP parameter pollution attacks //
+app.use(cors()); 
 
 // ROUTES // 
 app.use('/api/sauces', saucesRoutes);

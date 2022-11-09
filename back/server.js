@@ -1,5 +1,5 @@
 // Requires // What we need for working //
-const http = require('http');
+const https = require('https');
 const app = require('./app');
 
 //  Setting the port // NormalizePort return a valid port //
@@ -40,7 +40,7 @@ const errorHandler = error => {
   }
 };
 
-const server = http.createServer(app);
+const server = https.createServer(app);
 
 server.on('error', errorHandler);
 server.on('listening', () => {

@@ -1,6 +1,7 @@
 //REQUIRES//
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const mongoMask = require('mongo-mask');
 const User = require('../models/user');
 
 // SIGNUP //
