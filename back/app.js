@@ -1,6 +1,8 @@
+// REQUIRES //
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require("dotenv");
+const helmet = require("helmet")
 const saucesRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
 const path = require('path');
@@ -8,6 +10,7 @@ const app = express();
 
 dotenv.config();
 
+// MONGO DB-ACCESS //
 mongoose.connect('mongodb+srv://euphoriiah:ichigo123@euphombcluster1.5vhwq6d.mongodb.net/test',
   { useNewUrlParser: true,
     useUnifiedTopology: true })
@@ -16,7 +19,7 @@ mongoose.connect('mongodb+srv://euphoriiah:ichigo123@euphombcluster1.5vhwq6d.mon
 
 app.use(express.json());
 
-//header d'accès global à l'API
+//header d'accès global à l'API //
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
@@ -24,6 +27,9 @@ app.use((req, res, next) => {
     next();
   });
 app.use('/images', express.static(path.join(__dirname, 'images')));
+
+//HELMET SECURITY//
+app.use(helmet());
 
 app.use('/api/sauces', saucesRoutes);
 app.use('/api/auth', userRoutes);
