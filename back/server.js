@@ -1,8 +1,6 @@
-// Requires // What we need for working //
 const http = require('http');
 const app = require('./app');
 
-//  Setting the port // NormalizePort return a valid port //
 const normalizePort = val => {
   const port = parseInt(val, 10);
 
@@ -17,8 +15,6 @@ const normalizePort = val => {
 
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
-
-// Error Management // errorHandler search errors and deal with them as we define here//
 
 const errorHandler = error => {
   if (error.syscall !== 'listen') {
@@ -40,7 +36,7 @@ const errorHandler = error => {
   }
 };
 
-const server = http.createServer(app);
+const server = https.createServer(app);
 
 server.on('error', errorHandler);
 server.on('listening', () => {

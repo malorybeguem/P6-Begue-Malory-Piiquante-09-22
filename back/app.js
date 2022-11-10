@@ -1,15 +1,13 @@
-// REQUIRES //
-
 const express = require('express');
 const mongoose = require('mongoose');
-const helmet = require("helmet")
 const dotenv = require("dotenv");
+const hpp = require("hpp");
+const cors = require('cors');
 const saucesRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
 const path = require('path');
 const app = express();
 
-// MONGOOSE // connection to MongoDB Atlas //
 dotenv.config();
 
 mongoose.connect('mongodb+srv://euphoriiah:ichigo123@euphombcluster1.5vhwq6d.mongodb.net/test',
@@ -20,7 +18,7 @@ mongoose.connect('mongodb+srv://euphoriiah:ichigo123@euphombcluster1.5vhwq6d.mon
 
 app.use(express.json());
 
-//header - Global access to API //
+//header d'accès global à l'API
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
@@ -29,11 +27,6 @@ app.use((req, res, next) => {
   });
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-// Helmet middlware for safe headers //
-app.use(helmet());
-
-// ROUTES // 
 app.use('/api/sauces', saucesRoutes);
 app.use('/api/auth', userRoutes);
-
 module.exports = app;
