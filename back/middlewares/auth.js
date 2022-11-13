@@ -1,9 +1,11 @@
+// JWT FOR MORE SECURITY // USE A TOKEN TO CONNECT //
 const jwt = require('jsonwebtoken');
+
 
 module.exports = (req, res, next) => {
   try {
-    const token = req.headers.authorization.split(' ')[1]
-    const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET')
+    const token = req.headers.authorization.split(' ')[1] // Finding the token part of the authorization headers //
+    const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET') // Ckecking if it matchs the secret token key //
     const userId = decodedToken.userId
     console.log('id from Auth')
     console.log(userId)

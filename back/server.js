@@ -1,6 +1,8 @@
+// Requires //
 const http = require('http');
 const app = require('./app');
 
+//  Setting the port //
 const normalizePort = val => {
   const port = parseInt(val, 10);
 
@@ -16,6 +18,7 @@ const normalizePort = val => {
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
+// Error Handelling  // We tell him wich comportement have if an error occurs //
 const errorHandler = error => {
   if (error.syscall !== 'listen') {
     throw error;
@@ -38,6 +41,7 @@ const errorHandler = error => {
 
 const server = http.createServer(app);
 
+// Redirecting the server process to the Express App //
 server.on('error', errorHandler);
 server.on('listening', () => {
   const address = server.address();

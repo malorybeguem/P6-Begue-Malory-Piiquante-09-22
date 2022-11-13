@@ -31,6 +31,8 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 //HELMET SECURITY//
 app.use(helmet());
 
+// ROUTES // 
 app.use('/api/sauces', saucesRoutes);
 app.use('/api/auth', userRoutes);
+
 module.exports = app;
