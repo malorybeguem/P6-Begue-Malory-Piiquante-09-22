@@ -2,7 +2,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require("dotenv");
-const helmet = require("helmet")
+const rateLimit = require("express-rate-limit");
+const helmet = require("helmet");
 const saucesRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
 const path = require('path');
@@ -27,6 +28,13 @@ app.use((req, res, next) => {
     next();
   });
 app.use('/images', express.static(path.join(__dirname, 'images')));
+
+// EXPRESS LIMITER // TO AVOID TOO MANY CONNEXION ATTEMPTS //
+const limiter = rateLimit({
+  windowMs: 30 * 60 * 1000,
+  max: 100,
+});
+app.use(limiter);
 
 //HELMET SECURITY//
 app.use(helmet());
