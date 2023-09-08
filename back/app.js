@@ -12,7 +12,7 @@ const app = express();
 dotenv.config();
 
 // MONGO DB-ACCESS //
-mongoose.connect('mongodb+srv://euphoriiah:ichigo123@euphombcluster1.5vhwq6d.mongodb.net/test',
+mongoose.connect('xxx',
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
@@ -34,6 +34,7 @@ const limiter = rateLimit({
   windowMs: 30 * 60 * 1000,
   max: 100,
 });
+
 app.use(limiter);
 
 //HELMET SECURITY//
